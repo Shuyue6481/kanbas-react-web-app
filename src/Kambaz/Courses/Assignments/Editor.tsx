@@ -9,7 +9,7 @@ export default function AssignmentEditor() {
         The assignment is available online Submit a link to the landing page of
       </textarea>
       <br />
-      <table>
+      <table cellPadding="10">
         <tr>
           <td align="right" valign="top">
             <label htmlFor="wd-points">Points</label>
