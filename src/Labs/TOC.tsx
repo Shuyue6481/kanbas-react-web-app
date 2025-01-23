@@ -4,13 +4,6 @@ import { Link } from "react-router-dom";
 export default function TOC() {
   return (
     <div>
-      <a
-        id="wd-github"
-        href="https://github.com/Shuyue6481/kanbas-react-web-app.git"
-      >
-        GitHub Repository
-      </a>
-      <h2>Table of Contents</h2>
       <ul>
         <li>
           <Link to="/Labs">Labs</Link>
@@ -27,6 +20,12 @@ export default function TOC() {
         <li>
           <Link to="/Kambaz">Kambaz</Link>
         </li>
+        <li><a
+        id="wd-github"
+        href="https://github.com/Shuyue6481/kanbas-react-web-app.git"
+      >
+        GitHub Repository
+      </a></li>
       </ul>
     </div>
   );
