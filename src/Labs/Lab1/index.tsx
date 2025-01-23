@@ -243,6 +243,33 @@ export default function Lab1() {
           <br />
           <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy" />
           <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
+          <h4 id="wd-dropdowns">Dropdowns</h4>
+          <h5>Select one</h5>
+          <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label>
+          <br />
+          <select id="wd-select-one-genre">
+            <option value="COMEDY">Comedy</option>
+            <option value="DRAMA">Drama</option>
+            <option selected value="SCIFI">
+              Science Fiction
+            </option>
+            <option value="FANTASY">Fantasy</option>
+          </select>
+          <h5>Select many</h5>
+          <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label>
+          <br />
+          <select multiple id="wd-select-many-genre">
+            <option value="COMEDY" selected>
+              {" "}
+              Comedy{" "}
+            </option>
+            <option value="DRAMA"> Drama </option>
+            <option value="SCIFI" selected>
+              {" "}
+              Science Fiction{" "}
+            </option>
+            <option value="FANTASY"> Fantasy </option>
+          </select>
           <h4>Other HTML field types</h4>
           <label htmlFor="wd-text-fields-email"> Email: </label>
           <input
@@ -273,33 +300,6 @@ export default function Lab1() {
           <br />
         </form>
       </div>
-      <h4 id="wd-dropdowns">Dropdowns</h4>
-      <h5>Select one</h5>
-      <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label>
-      <br />
-      <select id="wd-select-one-genre">
-        <option value="COMEDY">Comedy</option>
-        <option value="DRAMA">Drama</option>
-        <option selected value="SCIFI">
-          Science Fiction
-        </option>
-        <option value="FANTASY">Fantasy</option>
-      </select>
-      <h5>Select many</h5>
-      <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label>
-      <br />
-      <select multiple id="wd-select-many-genre">
-        <option value="COMEDY" selected>
-          {" "}
-          Comedy{" "}
-        </option>
-        <option value="DRAMA"> Drama </option>
-        <option value="SCIFI" selected>
-          {" "}
-          Science Fiction{" "}
-        </option>
-        <option value="FANTASY"> Fantasy </option>
-      </select>
       <h4>Anchor tag</h4>
       Please
       <a href="https://www.lipsum.com" id="wd-lipsum">
