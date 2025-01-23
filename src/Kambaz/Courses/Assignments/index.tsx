@@ -15,6 +15,7 @@ export default function Assignments() {
           >
             A1 - ENV + HTML
           </a>{" "}
+          <div>Multiple Modules | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100pts</div>
         </li>
         <li className="wd-assignment-list-item">
           <a
@@ -23,6 +24,7 @@ export default function Assignments() {
           >
             A2 - CSS + BOOTSTRAP
           </a>{" "}
+          <div>Multiple Modules | <b>Not available until</b> May 13 at 12:00am | <b>Due</b> May 20 at 11:59pm | 100pts</div>
         </li>
         <li className="wd-assignment-list-item">
           <a
@@ -31,6 +33,7 @@ export default function Assignments() {
           >
             A3 - JAVASCRIPT + REACT
           </a>{" "}
+          <div>Multiple Modules | <b>Not available until</b> May 20 at 12:00am | <b>Due</b> May 27 at 11:59pm | 100pts</div>
         </li>
       </ul>
     </div>
