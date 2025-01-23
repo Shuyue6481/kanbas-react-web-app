@@ -2,34 +2,12 @@ export default function Modules() {
   return (
     <div>
       {/* Implement Collapse All button, View Progress button, etc. */}
-      <button
-        type="button"
-        // onClick={() => alert("Collapse All clicked")}
-      >
-        Collapse All
-      </button>
-      <button
-        type="button"
-        // onClick={() => alert("View Progress clicked")}
-      >
-        View Progress
-      </button>
+      <button type="button">Collapse All</button>
+      <button type="button">View Progress</button>
       <select>
         <option value="PublishAll">Publish All</option>
       </select>
-      {/* <button
-        type="button"
-        onClick={() => alert("Publish All")}
-        id="wd-all-good"
-      >
-        Publish All
-      </button> */}
-      <button
-        type="button"
-        // onClick={() => alert("Add Module")}
-      >
-        + Module
-      </button>
+      <button type="button">+ Module</button>
       <ul id="wd-modules">
         <li className="wd-module">
           <div className="wd-title">Week 1</div>

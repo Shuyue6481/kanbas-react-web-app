@@ -1,7 +1,6 @@
 export default function CourseStatus() {
   return (
     <div id="wd-course-status">
-      {/* <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}> */}
         <h2>Course Status</h2>
         <button>Unpublish</button> <button>Publish</button>
         <button>Import Existing Content</button>
