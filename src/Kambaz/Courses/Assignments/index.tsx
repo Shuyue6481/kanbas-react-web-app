@@ -1,10 +1,9 @@
-import { Button, ListGroup } from "react-bootstrap";
-import { BsCheckCircle, BsGripVertical, BsPlus } from "react-icons/bs";
+import { ListGroup } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentsControls from "./AssignmentsControls";
 import AssignmentControlButton from "./AssignmentControlButton";
 import { GoPlus, GoTriangleDown } from "react-icons/go";
-import { FaCircle } from "react-icons/fa6";
 import { IoEllipsisVertical } from "react-icons/io5";
 
 export default function Assignments() {

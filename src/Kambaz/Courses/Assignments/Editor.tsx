@@ -8,7 +8,6 @@ import {
   Button,
   Card,
   InputGroup,
-  Badge,
 } from "react-bootstrap";
 import { GoX } from "react-icons/go";
 
