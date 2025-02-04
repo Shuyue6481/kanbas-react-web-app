@@ -1,3 +1,19 @@
+import {
+  FormGroup,
+  FormLabel,
+  FormControl,
+  Form,
+  Col,
+  Row,
+  Button,
+  Card,
+  InputGroup,
+  Badge,
+} from "react-bootstrap";
+import { GoX } from "react-icons/go";
+
+{
+  /*
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
@@ -19,7 +35,6 @@ export default function AssignmentEditor() {
           </td>
         </tr>
 
-        {/* Complete on your own */}
         <tr>
           <td align="right" valign="top">
             <label htmlFor="wd-group">Assignment Group</label>
@@ -27,7 +42,6 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-group">
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              {/* <option value="QUIZES">QUIZES</option> */}
             </select>
           </td>
         </tr>
@@ -39,7 +53,6 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-display-grade-as">
               <option value="Percentage">Percentage</option>
-              {/* <option value="Points">Points</option> */}
             </select>
           </td>
         </tr>
@@ -50,8 +63,7 @@ export default function AssignmentEditor() {
           </td>
           <td>
             <select id="wd-submission-type">
-              <option value="Online">Online</option>
-              {/* <option value="Presentation">Presentation</option> */}
+               <option value="Online">Online</option> 
             </select>
           </td>
         </tr>
@@ -143,5 +155,192 @@ export default function AssignmentEditor() {
         <button>Save</button>
       </div>
     </div>
+  );
+}
+  */
+}
+
+
+
+export default function AssignmentEditor() {
+  const value = `The assignment is available online
+
+Submit a link to the landing page of your Web application running on Netlify.
+
+The landing page should include the following:
+
+• Your full name and section
+• Links to each of the lab assignments
+• Link to the Kanbas application
+• Links to all relevant source code repositories
+
+The Kanbas application should include a link to navigate back to the landing page.
+`;
+  return (
+    
+    <Form id="wd-assignments-editor" className="p-4">
+      <FormGroup className="mb-3" controlId="wd-name">
+        <FormLabel>Assignment Name</FormLabel>
+        <FormControl type="text" defaultValue="A1" />
+      </FormGroup>
+
+      <Form.Group className="mb-3">
+      <FormControl as="textarea" rows={12} defaultValue={value} />
+      {/* <p>
+          The assignment is{" "}
+          <span className="text-danger">available online</span>
+        </p>
+        <p>
+          Submit a link to the landing page of your Web application running on
+          Netlify.{" "}
+        </p>
+        <p>The landing page should include the following:</p>
+        <ul className="mb-0">
+          <li>Your full name and section</li>
+          <li>Links to each of the lab assignments</li>
+          <li>Link to the Kanbas application </li>
+          <li>Links to all relevant source code repositories</li>
+        </ul>
+        <p className="mt-3">
+          The Kanbas application should include a link to navigate back to the
+          landing page.
+        </p> */}
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3 align-items-center">
+        <Form.Label column sm={3} className="text-end">
+          Points
+        </Form.Label>
+        <Col sm={9}>
+          <Form.Control type="number" defaultValue={100} />
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3  align-items-center">
+        <Form.Label column sm={3} className="text-end">
+          Assignment Group
+        </Form.Label>
+        <Col sm={9}>
+          <Form.Select>
+            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+          </Form.Select>
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3  align-items-center">
+        <Form.Label column sm={3} className="text-end">
+          Display Grade as
+        </Form.Label>
+        <Col sm={9}>
+          <Form.Select>
+            <option value="Percentage">Percentage</option>
+          </Form.Select>
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3">
+        <Form.Label column sm={3} className="text-end">
+          Submission Type
+        </Form.Label>
+
+        <Col sm={9}>
+          <Card className="p-3">
+            <Form.Select>
+              <option value="Online">Online</option>
+            </Form.Select>
+
+            <Form.Label className="mt-3 fw-bold mb-3">
+              Online Entry Options
+            </Form.Label>
+            <Form.Check type="checkbox" label="Text Entry" className="mb-3" />
+            <Form.Check type="checkbox" label="Website URL" className="mb-3" />
+            <Form.Check
+              type="checkbox"
+              label="Media Recordings"
+              className="mb-3"
+            />
+            <Form.Check
+              type="checkbox"
+              label="Student Annotation"
+              className="mb-3"
+            />
+            <Form.Check type="checkbox" label="File Uploads" />
+          </Card>
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3">
+        <Form.Label column sm={3} className="text-end">
+          Assign
+        </Form.Label>
+
+        <Col sm={9}>
+          <Card className="p-3">
+            {/* <Form.Group className="mb-3">
+              <Form.Label>Assign to</Form.Label>
+              <Form.Control type="text" defaultValue="Everyone" />
+            </Form.Group> */}
+
+            <Form.Group className="mb-3 position-relative">
+              <Form.Label>Assign to</Form.Label>
+              <div className="assign-input-wrapper">
+                {/* <BadgeTag text="Everyone" /> */}
+                {/* <Badge className="assign-badge text-dark">
+                  Everyone
+                  <GoX className="assign-close-icon" />
+                </Badge> */}
+                <text className="assign-badge">
+                  Everyone
+                  <GoX className="assign-close-icon" />
+                </text>
+                <Form.Control type="text" className="assign-input" />
+              </div>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Due</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="datetime-local"
+                  defaultValue="2024-05-13T23:59"
+                  className="custom-date-input"
+                />
+              </InputGroup>
+            </Form.Group>
+
+            <Form.Group as={Row}>
+              <Col>
+                <Form.Label>Available from</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type="datetime-local"
+                    defaultValue="2024-05-06T12:00"
+                    className="custom-date-input"
+                  />
+                </InputGroup>
+              </Col>
+
+              <Col>
+                <Form.Label>Until</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type="datetime-local"
+                    defaultValue="2024-05-08T12:00"
+                    className="custom-date-input"
+                  />
+                </InputGroup>
+              </Col>
+            </Form.Group>
+          </Card>
+        </Col>
+      </Form.Group>
+
+      <hr />
+
+      <div className="d-flex justify-content-end gap-2">
+        <Button variant="light">Cancel</Button>
+        <Button variant="danger">Save</Button>
+      </div>
+    </Form>
   );
 }

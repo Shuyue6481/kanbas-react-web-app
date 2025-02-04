@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+body * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 768px) {
+  #wd-kambaz .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+.custom-date-input::-webkit-calendar-picker-indicator {
+  background-color: lightgrey;
+  padding: 10px;
+  border-radius: 0.25;
+  width: 1rem;
+  height: 50%;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+.assign-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e4e6;
+  border-radius: 6px;
+  padding: 6px;
+}
+.assign-badge {
+  background-color: lightgrey;
+  border-radius: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  position: absolute;
+  left: 10px;
+}
+.assign-input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  padding-left: 10px;
+}
