@@ -32,7 +32,7 @@ body * {
   border-left: 3px solid green !important;
 }
 .custom-date-input::-webkit-calendar-picker-indicator {
-  background-color: lightgrey;
+  background-color: rgb(240, 240, 240);
   padding: 10px;
   border-radius: 0.25;
   width: 1rem;
@@ -46,15 +46,15 @@ body * {
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid #e2e4e6;
+  border: 1px solid rgb(240, 240, 240);
   border-radius: 6px;
   padding: 6px;
 }
 .assign-badge {
-  background-color: lightgrey;
+  background-color: rgb(240, 240, 240);
   border-radius: 6px;
   align-items: center;
-  padding: 8px 10px;
+  padding: 6px 10px;
   position: absolute;
   left: 10px;
 }

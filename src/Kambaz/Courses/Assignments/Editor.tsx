@@ -289,7 +289,7 @@ The Kanbas application should include a link to navigate back to the landing pag
                 </Badge> */}
                 <text className="assign-badge">
                   Everyone
-                  <GoX className="assign-close-icon" />
+                  <GoX className="assign-close-icon ms-3" />
                 </text>
                 <Form.Control type="text" className="assign-input" />
               </div>
