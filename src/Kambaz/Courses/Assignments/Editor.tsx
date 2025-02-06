@@ -159,8 +159,6 @@ export default function AssignmentEditor() {
   */
 }
 
-
-
 export default function AssignmentEditor() {
   const value = `The assignment is available online
 
@@ -176,7 +174,6 @@ The landing page should include the following:
 The Kanbas application should include a link to navigate back to the landing page.
 `;
   return (
-    
     <Form id="wd-assignments-editor" className="p-4">
       <FormGroup className="mb-3" controlId="wd-name">
         <FormLabel>Assignment Name</FormLabel>
@@ -184,8 +181,8 @@ The Kanbas application should include a link to navigate back to the landing pag
       </FormGroup>
 
       <Form.Group className="mb-3">
-      <FormControl as="textarea" rows={12} defaultValue={value} />
-      {/* <p>
+        <FormControl as="textarea" rows={12} defaultValue={value} />
+        {/* <p>
           The assignment is{" "}
           <span className="text-danger">available online</span>
         </p>
@@ -249,7 +246,7 @@ The Kanbas application should include a link to navigate back to the landing pag
             </Form.Select>
 
             <Form.Label className="mt-3 fw-bold mb-3">
-              Online Entry Options
+              <strong>Online Entry Options</strong>
             </Form.Label>
             <Form.Check type="checkbox" label="Text Entry" className="mb-3" />
             <Form.Check type="checkbox" label="Website URL" className="mb-3" />
@@ -281,7 +278,9 @@ The Kanbas application should include a link to navigate back to the landing pag
             </Form.Group> */}
 
             <Form.Group className="mb-3 position-relative">
-              <Form.Label>Assign to</Form.Label>
+              <Form.Label>
+                <strong>Assign to</strong>
+              </Form.Label>
               <div className="assign-input-wrapper">
                 {/* <BadgeTag text="Everyone" /> */}
                 {/* <Badge className="assign-badge text-dark">
@@ -297,7 +296,9 @@ The Kanbas application should include a link to navigate back to the landing pag
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Due</Form.Label>
+              <Form.Label>
+                <strong>Due</strong>
+              </Form.Label>
               <InputGroup>
                 <Form.Control
                   type="datetime-local"
@@ -309,7 +310,9 @@ The Kanbas application should include a link to navigate back to the landing pag
 
             <Form.Group as={Row}>
               <Col>
-                <Form.Label>Available from</Form.Label>
+                <Form.Label>
+                  <strong>Available from</strong>
+                </Form.Label>
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
@@ -320,7 +323,9 @@ The Kanbas application should include a link to navigate back to the landing pag
               </Col>
 
               <Col>
-                <Form.Label>Until</Form.Label>
+                <Form.Label>
+                  <strong>Until</strong>
+                </Form.Label>
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
