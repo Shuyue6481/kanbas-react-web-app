@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router";
-import { courses } from "../Database";
+// import { courses } from "../Database";
 export default function CourseNavigation() {
   const { cid } = useParams();
   const { pathname } = useLocation();
