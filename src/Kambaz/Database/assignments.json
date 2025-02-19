@@ -7,5 +7,20 @@
   { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
   { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
   { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
-  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
+  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" },
+  { "_id": "A401", "title": "Structural", "course": "RS104" },
+  { "_id": "A402", "title": "Orbital", "course": "RS104" },
+  { "_id": "A403", "title": "Systems", "course": "RS104" },
+  { "_id": "A501", "title": "Design Task", "course": "RS105" },
+  { "_id": "A502", "title": "Calculations", "course": "RS105" },
+  { "_id": "A503", "title": "Engineering Exam", "course": "RS105" },
+  { "_id": "A601", "title": "Task 1", "course": "RS106" },
+  { "_id": "A602", "title": "Orbital Calculations 1", "course": "RS106" },
+  { "_id": "A603", "title": "Systems Engineering Exam 1", "course": "RS106" },
+  { "_id": "A701", "title": "Structural Design Task 2", "course": "RS107" },
+  { "_id": "A702", "title": "Orbital Calculations 2", "course": "RS107" },
+  { "_id": "A703", "title": "Systems Engineering Exam 2", "course": "RS107" },
+  { "_id": "A801", "title": "Structural Design Task 3", "course": "RS108" },
+  { "_id": "A802", "title": "Orbital Calculations 3", "course": "RS108" },
+  { "_id": "A803", "title": "Systems Engineering Exam 3", "course": "RS108" }
 ]

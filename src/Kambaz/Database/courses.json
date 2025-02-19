@@ -1,6 +1,7 @@
 [
     {
       "_id": "RS101",
+      "src": "reactjs.jpg",
       "name": "Rocket Propulsion",
       "number": "RS4550",
       "startDate": "2023-01-10",
@@ -11,6 +12,7 @@
     },
     {
       "_id": "RS102",
+      "src": "cs1234.jpg",
       "name": "Aerodynamics",
       "number": "RS4560",
       "startDate": "2023-01-10",
@@ -21,6 +23,7 @@
     },
     {
       "_id": "RS103",
+      "src": "cs5002.jpg",
       "name": "Spacecraft Design",
       "number": "RS4570",
       "startDate": "2023-01-10",
@@ -31,6 +34,7 @@
     },
     {
       "_id": "RS104",
+      "src": "cs5008.jpg",
       "name": "Organic Chemistry",
       "number": "CH1230",
       "startDate": "2023-01-10",
@@ -41,6 +45,7 @@
     },
     {
       "_id": "RS105",
+      "src": "cs5100.jpg",
       "name": "Inorganic Chemistry",
       "number": "CH1240",
       "startDate": "2023-01-10",
@@ -51,6 +56,7 @@
     },
     {
       "_id": "RS106",
+      "src": "cs5200.jpg",
       "name": "Physical Chemistry",
       "number": "CH1250",
       "startDate": "2023-01-10",
@@ -61,6 +67,7 @@
     },
     {
       "_id": "RS107",
+      "src": "cs5310.jpg",
       "name": "Ancient Languages and Scripts of Middle-earth",
       "number": "ME101",
       "startDate": "2023-01-10",
@@ -72,6 +79,7 @@
     },
     {
       "_id": "RS108",
+      "src": "cs5400.jpg",
       "name": "Wizards, Elves, and Men: Inter-species Diplomacy in Middle-earth",
       "number": "ME102",
       "startDate": "2023-01-10",
