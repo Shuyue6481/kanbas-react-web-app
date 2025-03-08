@@ -39,63 +39,87 @@
 //   );
 // }
 
-import { Form, Button, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Button, Container, FormControl } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentUser } from "./reducer";
 
 export default function Profile() {
+  const [profile, setProfile] = useState<any>({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const fetchProfile = () => {
+    if (!currentUser) return navigate("/Kambaz/Account/Signin");
+    setProfile(currentUser);
+  };
+  const signout = () => {
+    dispatch(setCurrentUser(null));
+    navigate("/Kambaz/Account/Signin");
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <Container className="p-4" style={{ width: "350px" }}>
       <h3 className="mb-3">Profile</h3>
 
-      <Form.Control
-        className="mb-2"
-        defaultValue="alice"
-        placeholder="Username"
-      />
-
-      <Form.Control
-        className="mb-2"
-        defaultValue="123"
-        type="text"
-        placeholder="Password"
-      />
-
-      <Form.Control
-        className="mb-2"
-        defaultValue="Alice"
-        placeholder="First Name"
-      />
-
-      <Form.Control
-        className="mb-2"
-        defaultValue="Wonderland"
-        placeholder="Last Name"
-      />
-
-      <InputGroup className="mb-2">
-        <Form.Control type="date"  />
-      </InputGroup>
-
-      <Form.Control
-        className="mb-2"
-        type="email"
-        defaultValue="alice@wonderland.com"
-        placeholder="Email"
-      />
-
-      <Form.Select className="mb-3" defaultValue="USER">
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
-        <option value="FACULTY">Faculty</option>
-        <option value="STUDENT">Student</option>
-      </Form.Select>
-
-      <Link to="/Kambaz/Account/Signin">
-        <Button variant="danger" className="w-100">
-          Signout
-        </Button>
-      </Link>
+      {profile && (
+        <div>
+          <FormControl
+            defaultValue={profile.username}
+            onChange={(e) =>
+              setProfile({ ...profile, username: e.target.value })
+            }
+          />
+          <FormControl
+            defaultValue={profile.password}
+            onChange={(e) =>
+              setProfile({ ...profile, password: e.target.value })
+            }
+          />
+          <FormControl
+            defaultValue={profile.firstName}
+            onChange={(e) =>
+              setProfile({ ...profile, firstName: e.target.value })
+            }
+          />
+          <FormControl
+            defaultValue={profile.lastName}
+            onChange={(e) =>
+              setProfile({ ...profile, lastName: e.target.value })
+            }
+          />
+          <FormControl
+            defaultValue={profile.dob}
+            onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
+            type="date"
+          />
+          <FormControl
+            defaultValue={profile.email}
+            onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+          />
+          <select
+            onChange={(e) =>
+              setProfile({
+                ...profile,
+                role: e.target.value,
+              })
+            }
+            className="form-control mb-2"
+            id="wd-role"
+          >
+            <option value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+            <option value="FACULTY">Faculty</option>
+            <option value="STUDENT">Student</option>
+          </select>
+          <Button onClick={signout}> Sign out </Button>
+        </div>
+      )}
     </Container>
   );
 }

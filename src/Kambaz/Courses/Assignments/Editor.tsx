@@ -9,11 +9,12 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { GoX } from "react-icons/go";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as db from "../../Database";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
+  const { courseId, aid } = useParams();
   const assignments = db.assignments;
   const assignment = assignments.find((a) => a._id === aid);
   const value = `The assignment is available online
@@ -29,6 +30,18 @@ The landing page should include the following:
 
 The Kanbas application should include a link to navigate back to the landing page.
 `;
+
+
+
+	// const assignments = useSelector(
+	// 	(state:any) => state.assignmentsReducer.assignments
+	// );
+	// const assignment = useSelector(
+	// 	(state:any) => state.assignmentsReducer.assignment
+	// );
+
+	// const dispatch = useDispatch();
+	// const navigate = useNavigate();
 
   return (
     <Form id="wd-assignments-editor" className="p-4">
@@ -49,59 +62,6 @@ The Kanbas application should include a link to navigate back to the landing pag
           <Form.Control type="number" defaultValue={100} />
         </Col>
       </Form.Group>
-
-      {/* <Form.Group as={Row} className="mb-3  align-items-center">
-        <Form.Label column sm={3} className="text-end">
-          Assignment Group
-        </Form.Label>
-        <Col sm={9}>
-          <Form.Select>
-            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-          </Form.Select>
-        </Col>
-      </Form.Group>
-
-      <Form.Group as={Row} className="mb-3  align-items-center">
-        <Form.Label column sm={3} className="text-end">
-          Display Grade as
-        </Form.Label>
-        <Col sm={9}>
-          <Form.Select>
-            <option value="Percentage">Percentage</option>
-          </Form.Select>
-        </Col>
-      </Form.Group> */}
-
-      {/* <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm={3} className="text-end">
-          Submission Type
-        </Form.Label>
-
-        <Col sm={9}>
-          <Card className="p-3">
-            <Form.Select>
-              <option value="Online">Online</option>
-            </Form.Select>
-
-            <Form.Label className="mt-3 fw-bold mb-3">
-              <strong>Online Entry Options</strong>
-            </Form.Label>
-            <Form.Check type="checkbox" label="Text Entry" className="mb-3" />
-            <Form.Check type="checkbox" label="Website URL" className="mb-3" />
-            <Form.Check
-              type="checkbox"
-              label="Media Recordings"
-              className="mb-3"
-            />
-            <Form.Check
-              type="checkbox"
-              label="Student Annotation"
-              className="mb-3"
-            />
-            <Form.Check type="checkbox" label="File Uploads" />
-          </Card>
-        </Col>
-      </Form.Group> */}
 
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3} className="text-end">
@@ -175,10 +135,10 @@ The Kanbas application should include a link to navigate back to the landing pag
       </div> */}
 
       <div className="d-flex justify-content-end gap-2">
-        <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-light">
+        <Link to={`/Kambaz/Courses/${courseId}/Assignments`} className="btn btn-light">
           Cancel
         </Link>
-        <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-danger">
+        <Link to={`/Kambaz/Courses/${courseId}/Assignments`} className="btn btn-danger">
           Save
         </Link>
       </div>
