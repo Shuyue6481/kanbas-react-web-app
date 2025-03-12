@@ -56,64 +56,23 @@ const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
-    // addAssignment: (state, action) => {
-    //   state.assignments = [
-    //     ...state.assignments,
-    //     { ...action.payload, _id: uuidv4() },
-    //   ];
-    // },
-    // addAssignment: (state, { payload: assignment }) => {
-    //   const newAssignment: any = {
-    //     _id: uuidv4(),
-    //     title: assignment.title,
-    //     description: assignment.description,
-    //     points: assignment.point,
-    //     dueDate: assignment.dueDate,
-    //     availableFromDate: assignment.availableFromDate,
-    //     availableUntilDate: assignment.availableUntilDate,
-    //   };
-    //   state.assignments = [...state.assignments, newAssignment];
-    // },
     addAssignment: (state, { payload }) => {
-        state.assignments = [
-          ...state.assignments,
-          { ...payload, _id: uuidv4() },
-        ];
-      },
-
-
-    // deleteAssignment: (state, action) => {
-    //   state.assignments = state.assignments.filter(
-    //     (assignment) => assignment._id !== action.payload
-    //   );
-    // },
-    // updateAssignment: (state, action) => {
-    //   state.assignments = state.assignments.map((assignment) => {
-    //     if (assignment._id === action.payload._id) {
-    //       return action.payload;
-    //     } else {
-    //       return assignment;
-    //     }
-    //   });
-    // },
-    // editAssignment: (state, action) => {
-    //   state.assignment = action.payload;
-    // },
-
+      state.assignments = [...state.assignments, { ...payload, _id: uuidv4() }];
+    },
 
     deleteAssignment: (state, { payload: assignmentId }) => {
-        state.assignments = state.assignments.filter(
-          (assignment) => assignment._id !== assignmentId
-        );
-      },
-      updateAssignment: (state, { payload: assignment }) => {
-        state.assignments = state.assignments.map((item) =>
-          item._id === assignment._id ? assignment : item
-        );
-      },
-      editAssignment: (state, { payload: assignment }) => {
-        state.assignment = assignment;
-      },
+      state.assignments = state.assignments.filter(
+        (assignment) => assignment._id !== assignmentId
+      );
+    },
+    updateAssignment: (state, { payload: assignment }) => {
+      state.assignments = state.assignments.map((item) =>
+        item._id === assignment._id ? assignment : item
+      );
+    },
+    editAssignment: (state, { payload: assignment }) => {
+      state.assignment = assignment;
+    },
   },
 });
 
