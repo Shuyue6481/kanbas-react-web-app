@@ -4,6 +4,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import { MdDoNotDisturbAlt } from "react-icons/md";
 import ModuleEditor from "./ModuleEditor";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 export default function ModulesControls({
   moduleName,
   setModuleName,
@@ -16,6 +17,7 @@ export default function ModulesControls({
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   return (
     <div id="wd-modules-controls" className="text-nowrap">
@@ -26,7 +28,15 @@ export default function ModulesControls({
         id="wd-add-module-btn"
         data-bs-toggle="modal"
         data-bs-target="#wd-add-module-dialog"
-        onClick={handleShow}
+        // onClick={handleShow}
+        onClick={() => {
+          if (
+            currentUser &&
+            (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
+          ) {
+            handleShow();
+          }
+        }}
       >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
