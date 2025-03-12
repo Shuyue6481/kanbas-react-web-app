@@ -12,11 +12,12 @@ import { GoX } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as db from "../../Database";
 import { useDispatch, useSelector } from "react-redux";
+import { addAssignment, editAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
-  const { courseId, aid } = useParams();
-  const assignments = db.assignments;
-  const assignment = assignments.find((a) => a._id === aid);
+  // const { cid, aid } = useParams();
+  // const assignments = db.assignments;
+  // const assignment = assignments.find((a) => a._id === aid);
   const value = `The assignment is available online
 
 Submit a link to the landing page of your Web application running on Netlify.
@@ -31,27 +32,50 @@ The landing page should include the following:
 The Kanbas application should include a link to navigate back to the landing page.
 `;
 
+  const assignments = useSelector(
+    (state: any) => state.assignmentsReducer.assignments
+  );
+  const assignment = useSelector(
+    (state: any) => state.assignmentsReducer.assignment
+  );
 
-
-	// const assignments = useSelector(
-	// 	(state:any) => state.assignmentsReducer.assignments
-	// );
-	// const assignment = useSelector(
-	// 	(state:any) => state.assignmentsReducer.assignment
-	// );
-
-	// const dispatch = useDispatch();
-	// const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { cid } = useParams();
 
   return (
     <Form id="wd-assignments-editor" className="p-4">
       <FormGroup className="mb-3" controlId="wd-name">
         <FormLabel>Assignment Name</FormLabel>
-        <FormControl type="text" defaultValue={assignment ? assignment.title : ""} />
+        <FormControl
+          type="text"
+          value={assignment.title}
+          onChange={(e) =>
+            dispatch(
+              editAssignment({
+                ...assignment,
+                title: e.target.value,
+              })
+            )
+          }
+        />
       </FormGroup>
 
       <Form.Group className="mb-3">
-        <FormControl as="textarea" rows={12} defaultValue={value} />
+        <FormControl
+          as="textarea"
+          rows={12}
+          defaultValue={value}
+          value={assignment.description}
+          onChange={(e) =>
+            dispatch(
+              editAssignment({
+                ...assignment,
+                description: e.target.value,
+              })
+            )
+          }
+        />
       </Form.Group>
 
       <Form.Group as={Row} className="mb-3 align-items-center">
@@ -59,7 +83,18 @@ The Kanbas application should include a link to navigate back to the landing pag
           Points
         </Form.Label>
         <Col sm={9}>
-          <Form.Control type="number" defaultValue={100} />
+          <Form.Control
+            type="number"
+            value={assignment.points}
+            onChange={(e) =>
+              dispatch(
+                editAssignment({
+                  ...assignment,
+                  points: e.target.value,
+                })
+              )
+            }
+          />
         </Col>
       </Form.Group>
 
@@ -90,8 +125,16 @@ The Kanbas application should include a link to navigate back to the landing pag
               <InputGroup>
                 <Form.Control
                   type="datetime-local"
-                  defaultValue="2024-05-13T23:59"
+                  value={assignment.dueDate}
                   className="custom-date-input"
+                  onChange={(e) =>
+                    dispatch(
+                      editAssignment({
+                        ...assignment,
+                        dueDate: e.target.value,
+                      })
+                    )
+                  }
                 />
               </InputGroup>
             </Form.Group>
@@ -104,8 +147,16 @@ The Kanbas application should include a link to navigate back to the landing pag
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue="2024-05-06T12:00"
+                    value={assignment.availableFromDate}
                     className="custom-date-input"
+                    onChange={(e) =>
+                      dispatch(
+                        editAssignment({
+                          ...assignment,
+                          availableFromDate: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </InputGroup>
               </Col>
@@ -117,8 +168,16 @@ The Kanbas application should include a link to navigate back to the landing pag
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue="2024-05-08T12:00"
+                    value={assignment.availableUntilDate}
                     className="custom-date-input"
+                    onChange={(e) =>
+                      dispatch(
+                        editAssignment({
+                          ...assignment,
+                          availableUntilDate: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </InputGroup>
               </Col>
@@ -135,10 +194,24 @@ The Kanbas application should include a link to navigate back to the landing pag
       </div> */}
 
       <div className="d-flex justify-content-end gap-2">
-        <Link to={`/Kambaz/Courses/${courseId}/Assignments`} className="btn btn-light">
+        <Link
+          to={`/Kambaz/Courses/${cid}/Assignments`}
+          className="btn btn-light"
+        >
           Cancel
         </Link>
-        <Link to={`/Kambaz/Courses/${courseId}/Assignments`} className="btn btn-danger">
+        <Link
+          to={`/Kambaz/Courses/${cid}/Assignments`}
+          className="btn btn-danger"
+          onClick={() => {
+            if (assignments.find((a: any) => a._id === assignment._id)) {
+              dispatch(updateAssignment(assignment));
+            } else {
+              dispatch(addAssignment(assignment));
+            }
+            navigate(`/Kanbas/Courses/${cid}/Assignments`);
+          }}
+        >
           Save
         </Link>
       </div>

@@ -2,8 +2,9 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import * as db from "./Database";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { enrollCourse, unenrollCourse } from "./enrollmentReducer";
+
 
 export default function Dashboard({
   courses,
@@ -17,60 +18,47 @@ export default function Dashboard({
   course: any;
   setCourse: (course: any) => void;
   addNewCourse: () => void;
-  deleteCourse: (course: any) => void;
+  deleteCourse: (courseId: any) => void;
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  // enrollment 状态可以先从 Redux 中获取，如果没有，则使用 Database 中的初始值
   const enrollments = useSelector(
     (state: any) => state.enrollmentReducer.enrollments || db.enrollments
   );
   const dispatch = useDispatch();
-  const [showAllCourses, setShowAllCourses] = useState(false);
-  // const displayedCourses =
-  //   currentUser && currentUser.role === "STUDENT" && !showAllCourses
-  //     ? courses.filter((course: any) =>
-  //         enrollments.some(
-  //           (enrollment: any) =>
-  //             enrollment.user === currentUser._id &&
-  //             enrollment.course === course._id
-  //         )
-  //       )
-  //     : courses;
 
-  const displayedCourses = currentUser
-    ? currentUser.role === "STUDENT"
-      ? showAllCourses
-        ? courses
-        : courses.filter((course: any) =>
-            enrollments.some(
-              (enrollment: any) =>
-                enrollment.user === currentUser._id &&
-                enrollment.course === course._id
-            )
-          )
-      : courses.filter((course: any) =>
+  // 针对学生用户，增加一个状态来切换显示“所有课程”或“仅注册的课程”
+  const [showAllCourses, setShowAllCourses] = useState(false);
+
+  // 如果当前用户是学生且未开启“显示所有课程”，只显示该学生注册的课程
+  const displayedCourses =
+    currentUser && currentUser.role === "STUDENT" && !showAllCourses
+      ? courses.filter((course: any) =>
           enrollments.some(
             (enrollment: any) =>
               enrollment.user === currentUser._id &&
               enrollment.course === course._id
           )
         )
-    : [];
+      : courses;
 
   return (
     <div id="wd-dashboard">
-      {currentUser && currentUser.role === "STUDENT" && (
-        <Button
-          variant="primary"
-          size="lg"
-          className="me-1 float-end"
-          id="wd-enrollment"
-          onClick={() => setShowAllCourses(!showAllCourses)}
-        >
-          Enrollments
-        </Button>
-      )}
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <div className="d-flex justify-content-between align-items-center">
+        <h1 id="wd-dashboard-title">Dashboard</h1>
+        {/* 学生用户显示蓝色 Enrollments 按钮 */}
+        {currentUser && currentUser.role === "STUDENT" && (
+          <Button
+            variant="primary"
+            onClick={() => setShowAllCourses(!showAllCourses)}
+          >
+            Enrollments
+          </Button>
+        )}
+      </div>
+      <hr />
+      
       {currentUser && currentUser.role === "ADMIN" && (
         <div>
           <h5>
@@ -80,8 +68,7 @@ export default function Dashboard({
               id="wd-add-new-course-click"
               onClick={addNewCourse}
             >
-              {" "}
-              Add{" "}
+              Add
             </button>
             <button
               className="btn btn-warning float-end me-2"
@@ -94,7 +81,9 @@ export default function Dashboard({
             <input
               value={course.name}
               className="form-control mb-2"
-              onChange={(e) => setCourse({ ...course, name: e.target.value })}
+              onChange={(e) =>
+                setCourse({ ...course, name: e.target.value })
+              }
             />
             <textarea
               value={course.description}
@@ -107,11 +96,15 @@ export default function Dashboard({
           <hr />
         </div>
       )}
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>{" "}
+
+      <h2 id="wd-dashboard-published">
+        Published Courses ({displayedCourses.length})
+      </h2>
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {displayedCourses.map((course: any) => {
+            // 针对学生，判断当前课程是否已注册
             const isEnrolled =
               currentUser && currentUser.role === "STUDENT"
                 ? enrollments.some(
@@ -119,7 +112,7 @@ export default function Dashboard({
                       enrollment.user === currentUser._id &&
                       enrollment.course === course._id
                   )
-                : true;
+                : true; // 非学生角色直接视为可导航
 
             return (
               <Col
@@ -128,18 +121,26 @@ export default function Dashboard({
                 style={{ width: "300px" }}
               >
                 <Card>
+                  {/* 对于学生，只有注册的课程才允许导航；否则点击链接不跳转 */}
                   <Link
                     to={isEnrolled ? `/Kambaz/Courses/${course._id}/Home` : "#"}
                     className="wd-dashboard-course-link text-decoration-none text-dark"
+                    onClick={(e) => {
+                      if (
+                        currentUser &&
+                        currentUser.role === "STUDENT" &&
+                        !isEnrolled
+                      ) {
+                        e.preventDefault();
+                        alert("You are not enrolled in this course.");
+                      }
+                    }}
                   >
                     <Card.Img
                       src={`/images/${course.src}`}
                       variant="top"
                       width="100%"
                       height={160}
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/default.jpg";
-                      }}
                     />
                     <Card.Body className="card-body">
                       <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -151,27 +152,23 @@ export default function Dashboard({
                       >
                         {course.description}
                       </Card.Text>
-
-                      <Button variant="primary"> Go </Button>
-
+                      {currentUser && currentUser.role === "ADMIN" && (
+                        <Button variant="primary"> Go </Button>
+                      )}
+                      {/* 学生的注册/取消注册按钮 */}
                       {currentUser && currentUser.role === "STUDENT" && (
                         <>
                           {isEnrolled ? (
                             <Button
                               variant="danger"
-                              className="float-end"
                               onClick={(e) => {
                                 e.preventDefault();
-                                const enrollmentToRemove = enrollments.find(
-                                  (enr: any) =>
-                                    enr.user === currentUser._id &&
-                                    enr.course === course._id
+                                dispatch(
+                                  unenrollCourse({
+                                    user: currentUser._id,
+                                    course: course._id,
+                                  })
                                 );
-                                if (enrollmentToRemove) {
-                                  dispatch(
-                                    unenrollCourse(enrollmentToRemove._id)
-                                  );
-                                }
                               }}
                             >
                               Unenroll
@@ -179,7 +176,6 @@ export default function Dashboard({
                           ) : (
                             <Button
                               variant="success"
-                              className="float-end"
                               onClick={(e) => {
                                 e.preventDefault();
                                 dispatch(
@@ -195,7 +191,6 @@ export default function Dashboard({
                           )}
                         </>
                       )}
-
                       {currentUser && currentUser.role === "ADMIN" && (
                         <>
                           <button

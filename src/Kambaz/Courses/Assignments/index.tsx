@@ -6,10 +6,29 @@ import { GoPlus, GoTriangleDown } from "react-icons/go";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router";
 import * as db from "../../Database";
+import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { deleteAssignment, editAssignment } from "./reducer";
+import { FaDeleteLeft, FaTrash } from "react-icons/fa6";
+import { deleteModule } from "../Modules/reducer";
+import { format } from "date-fns";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+
+  const assignments = useSelector(
+    (state: any) => state.assignmentsReducer.assignments || []
+  );
+  const courseAssignments = assignments.filter(
+    (assignment: any) => assignment.course === cid
+  );
+  const dispatch = useDispatch();
+  const [selectedAssignment, setSelectedAssignment] = React.useState(
+    courseAssignments[courseAssignments.length - 1]
+  );
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   return (
     <div>
       <AssignmentsControls />
@@ -46,16 +65,133 @@ export default function Assignments() {
                 <Link
                   to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
                   className="fw-bold text-dark text-decoration-none"
+                  onClick={(e) => {
+                    if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
+                      dispatch(editAssignment(assignment));
+                    } else {
+                      // 阻止导航
+                      e.preventDefault();
+                    }
+                  }}
+                  // onClick={(e) => {
+                  //   dispatch(editAssignment(assignment));
+                  // }}
                 >
                   {assignment.title}
                 </Link>
                 <div className="text-muted small">
-                  <span className="text-danger">Multiple Modules</span> |{" "}
-                  <b>Not available until</b> May 13 at 12:00am | <br />
-                  <b>Due</b> May 20 at 11:59pm | 100pts
+                  <small>
+                    <span className="text-danger">Multiple Modules</span> |{" "}
+                    <strong>Not available until</strong>{" "}
+                    {/* {assignment.availableUntilDate} */}
+                    {/* {format(
+                      new Date(assignment.availableUntilDate),
+                      "MMM d 'at' h:mma"
+                    )}{" "} */}
+                    {assignment.availableUntilDate
+                      ? format(
+                          new Date(assignment.availableUntilDate),
+                          "MMM d 'at' h:mma"
+                        )
+                      : ""}{" "}
+                    | <br />
+                    <strong>Due</strong>{" "}
+                    {/* {format(new Date(assignment.dueDate), "MMM d 'at' h:mma")} |{" "} */}
+                    {assignment.dueDate
+                      ? format(new Date(assignment.dueDate), "MMM d 'at' h:mma")
+                      : ""}|{" "}
+                    {assignment.points} pts
+                  </small>
                 </div>
               </div>
               <LessonControlButtons />
+              {/* <FaTrash
+                className="text-danger me-1 mb-1 float-end fs-5"
+                style={{ position: "relative", top: "3px" }}
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                onClick={() => {
+                  setSelectedAssignment({ ...assignment });
+                  dispatch(deleteAssignment(assignment._id));
+                }}
+              /> */}
+
+              <FaTrash
+                className="text-danger me-1 mb-1 float-end fs-5"
+                style={{ position: "relative", top: "3px" }}
+                // data-bs-toggle="modal"
+                // data-bs-target="#deleteModal"
+                data-bs-toggle={
+                  currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
+                    ? "modal"
+                    : undefined
+                }
+                data-bs-target={
+                  currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
+                    ? "#deleteModal"
+                    : undefined
+                }
+                onClick={() => {
+                  if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
+                    setSelectedAssignment({ ...assignment });
+                  }
+                }}
+                // onClick={() => {
+                //   setSelectedAssignment({ ...assignment });
+                // }}
+              />
+
+              <div
+                className="modal fade"
+                id="deleteModal"
+                tabIndex={-1}
+                aria-labelledby="deleteModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h1 className="modal-title fs-5" id="deleteModalLabel">
+                        Confirm Deletion
+                      </h1>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      Are you sure you want to delete {selectedAssignment.title}
+                      ? This action cannot be undone.
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        No
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                          if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
+                            dispatch(deleteAssignment(selectedAssignment._id))
+                          }
+                        }}
+                        // onClick={() =>
+                        //   dispatch(deleteAssignment(selectedAssignment._id))
+                        // }
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
           ))}
       </ul>
