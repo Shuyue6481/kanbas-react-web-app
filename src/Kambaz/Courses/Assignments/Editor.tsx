@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import { GoX } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import * as db from "../../Database";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, editAssignment, updateAssignment } from "./reducer";
 

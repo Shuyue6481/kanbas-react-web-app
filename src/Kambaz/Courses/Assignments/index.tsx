@@ -5,12 +5,10 @@ import AssignmentControlButton from "./AssignmentControlButton";
 import { GoPlus, GoTriangleDown } from "react-icons/go";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router";
-import * as db from "../../Database";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { deleteAssignment, editAssignment } from "./reducer";
-import { FaDeleteLeft, FaTrash } from "react-icons/fa6";
-import { deleteModule } from "../Modules/reducer";
+import { FaTrash } from "react-icons/fa6";
 import { format } from "date-fns";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -69,7 +67,6 @@ export default function Assignments() {
                     if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
                       dispatch(editAssignment(assignment));
                     } else {
-                      // 阻止导航
                       e.preventDefault();
                     }
                   }}

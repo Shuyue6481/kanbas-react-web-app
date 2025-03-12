@@ -1,20 +1,14 @@
-import React from "react";
+
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { editAssignment } from "./reducer";
 import { v4 as uuidv4 } from "uuid";
-import { assignments } from "../../Database";
+
 
 export default function AssignmentsControls() {
   const { cid } = useParams();
-  const assignments = useSelector(
-    (state: any) => state.assignmentsReducer.assignments
-  );
-  const courseAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid
-  );
   const dispatch = useDispatch();
   const newDefaultAssignment = {
     title: "New Assignment",
@@ -23,9 +17,6 @@ export default function AssignmentsControls() {
     points: "",
     course: cid,
   };
-  const [selectedAssignment, setSelectedAssignment] = React.useState(
-    courseAssignments[courseAssignments.length - 1]
-  );
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const navigate = useNavigate();
