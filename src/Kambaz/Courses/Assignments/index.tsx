@@ -64,7 +64,11 @@ export default function Assignments() {
                   to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
                   className="fw-bold text-dark text-decoration-none"
                   onClick={(e) => {
-                    if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
+                    if (
+                      currentUser &&
+                      (currentUser.role === "ADMIN" ||
+                        currentUser.role === "FACULTY")
+                    ) {
                       dispatch(editAssignment(assignment));
                     } else {
                       e.preventDefault();
@@ -96,8 +100,8 @@ export default function Assignments() {
                     {/* {format(new Date(assignment.dueDate), "MMM d 'at' h:mma")} |{" "} */}
                     {assignment.dueDate
                       ? format(new Date(assignment.dueDate), "MMM d 'at' h:mma")
-                      : ""}|{" "}
-                    {assignment.points} pts
+                      : ""}
+                    | {assignment.points} pts
                   </small>
                 </div>
               </div>
@@ -113,30 +117,17 @@ export default function Assignments() {
                 }}
               /> */}
 
-              <FaTrash
-                className="text-danger me-1 mb-1 float-end fs-5"
-                style={{ position: "relative", top: "3px" }}
-                // data-bs-toggle="modal"
-                // data-bs-target="#deleteModal"
-                data-bs-toggle={
-                  currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
-                    ? "modal"
-                    : undefined
-                }
-                data-bs-target={
-                  currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
-                    ? "#deleteModal"
-                    : undefined
-                }
-                onClick={() => {
-                  if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
-                    setSelectedAssignment({ ...assignment });
-                  }
-                }}
-                // onClick={() => {
-                //   setSelectedAssignment({ ...assignment });
-                // }}
-              />
+              {currentUser &&
+                (currentUser.role === "ADMIN" ||
+                  currentUser.role === "FACULTY") && (
+                  <FaTrash
+                    className="text-danger me-1 mb-1 float-end fs-5"
+                    style={{ position: "relative", top: "3px" }}
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    onClick={() => setSelectedAssignment({ ...assignment })}
+                  />
+                )}
 
               <div
                 className="modal fade"
@@ -174,14 +165,9 @@ export default function Assignments() {
                         type="button"
                         className="btn btn-primary"
                         data-bs-dismiss="modal"
-                        onClick={() => {
-                          if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
-                            dispatch(deleteAssignment(selectedAssignment._id))
-                          }
-                        }}
-                        // onClick={() =>
-                        //   dispatch(deleteAssignment(selectedAssignment._id))
-                        // }
+                        onClick={() =>
+                          dispatch(deleteAssignment(selectedAssignment._id))
+                        }
                       >
                         Yes
                       </button>

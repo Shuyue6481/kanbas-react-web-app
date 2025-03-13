@@ -21,26 +21,25 @@ export default function ModulesControls({
 
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button
-        variant="danger"
-        size="lg"
-        className="me-1 float-end"
-        id="wd-add-module-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#wd-add-module-dialog"
-        // onClick={handleShow}
-        onClick={() => {
-          if (
-            currentUser &&
-            (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")
-          ) {
-            handleShow();
-          }
-        }}
-      >
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Module
-      </Button>
+      {currentUser &&
+        (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (
+          <Button
+            variant="danger"
+            size="lg"
+            className="me-1 float-end"
+            id="wd-add-module-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#wd-add-module-dialog"
+            onClick={handleShow}
+          >
+            <FaPlus
+              className="position-relative me-2"
+              style={{ bottom: "1px" }}
+            />
+            Module
+          </Button>
+        )}
+
       <ModuleEditor
         dialogTitle="Add Module"
         moduleName={moduleName}
@@ -102,68 +101,3 @@ export default function ModulesControls({
     </div>
   );
 }
-
-// import { Button, InputGroup, FormControl } from "react-bootstrap";
-// import { FaPlus, FaSearch } from "react-icons/fa";
-
-// export default function AssignmentsControls() {
-//   return (
-//     <div
-//       id="wd-assignments-controls"
-//       className="d-flex justify-content-between text-nowrap"
-//     >
-//       <InputGroup style={{ width: "400px", height: "50px" }}>
-//         <InputGroup.Text className="bg-white">
-//           <FaSearch className="text-secondary" />
-//         </InputGroup.Text>
-//         <FormControl
-//           placeholder="Search..."
-//           id="wd-search-assignment"
-//           style={{ borderLeft: "none", bottom: "1px" }}
-//         />
-//       </InputGroup>
-
-//       <div className="d-flex gap-3">
-//         <Button
-//           variant="secondary"
-//           size="lg"
-//           className=" text-dark px-4"
-//           id="wd-group-btn"
-//         >
-//           Collapse All
-//         </Button>
-
-//         <Button
-//           variant="secondary"
-//           size="lg"
-//           className=" text-dark px-4"
-//           id="wd-group-btn"
-//         >
-//           View Progress
-//         </Button>
-
-//         <Button
-//           variant="secondary"
-//           size="lg"
-//           className=" text-dark px-4"
-//           id="wd-group-btn"
-//         >
-//           Group
-//         </Button>
-
-//         <Button
-//           variant="danger"
-//           size="lg"
-//           className="me-1 float-end"
-//           id="wd-assignment"
-//         >
-//           <FaPlus
-//             className="position-relative me-2"
-//             style={{ bottom: "1px" }}
-//           />
-//           Assignment
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// }

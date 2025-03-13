@@ -1,11 +1,9 @@
-
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { editAssignment } from "./reducer";
 import { v4 as uuidv4 } from "uuid";
-
 
 export default function AssignmentsControls() {
   const { cid } = useParams();
@@ -55,24 +53,22 @@ export default function AssignmentsControls() {
           Group
         </Button>
 
-        <Button
-          variant="danger"
-          size="lg"
-          className="me-1 float-end"
-          id="wd-assignment"
-          // onClick={handleButtonClick}
-          onClick={() => {
-            if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
-              handleButtonClick();
-            }
-          }}
-        >
-          <FaPlus
-            className="position-relative me-2"
-            style={{ bottom: "1px" }}
-          />
-          Assignment
-        </Button>
+        {currentUser &&
+          (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (
+            <Button
+              variant="danger"
+              size="lg"
+              className="me-1 float-end"
+              id="wd-assignment"
+              onClick={handleButtonClick}
+            >
+              <FaPlus
+                className="position-relative me-2"
+                style={{ bottom: "1px" }}
+              />
+              Assignment
+            </Button>
+          )}
       </div>
     </div>
   );
