@@ -25,7 +25,7 @@ export default function Kambaz() {
   const addNewCourse = () => {
     const newCourse = { ...course, _id: uuidv4() };
     setCourses([...courses, newCourse]);
-    if (currentUser && currentUser.role === "ADMIN") {
+    if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
       dispatch(enrollCourse({ user: currentUser._id, course: newCourse._id }));
     }
   };
