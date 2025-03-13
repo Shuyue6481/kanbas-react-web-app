@@ -62,7 +62,7 @@ export default function AssignmentsControls() {
           id="wd-assignment"
           // onClick={handleButtonClick}
           onClick={() => {
-            if (currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") {
+            if (currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY")) {
               handleButtonClick();
             }
           }}
