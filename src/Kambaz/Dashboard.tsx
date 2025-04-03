@@ -522,13 +522,18 @@ export default function Dashboard({
                     }}
                   >
                     <Card.Img
-                      src={`/images/${course.src}`}
+                      // src={`/images/${course.src}`}
+                      src={
+                        course.src
+                          ? `/images/${course.src}`
+                          : "/images/default.jpg"
+                      }
                       variant="top"
                       width="100%"
                       height={160}
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/default.jpg";
-                      }}
+                      // onError={(e) => {
+                      //   e.currentTarget.src = "/images/default.jpg";
+                      // }}
                     />
                     <Card.Body className="card-body">
                       <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
