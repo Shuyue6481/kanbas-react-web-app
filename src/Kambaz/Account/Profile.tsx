@@ -1,27 +1,39 @@
-
-
-import {Button, Container, FormControl } from "react-bootstrap";
+import { Button, Container, FormControl } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
+import * as client from "./client";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kambaz/Account/Signin");
-    setProfile(currentUser);
-  };
-  const signout = () => {
+  // const fetchProfile = () => {
+  //   if (!currentUser) return navigate("/Kambaz/Account/Signin");
+  //   setProfile(currentUser);
+  // };
+  const signout = async () => {
+    await client.signout();
     dispatch(setCurrentUser(null));
     navigate("/Kambaz/Account/Signin");
   };
+  // useEffect(() => {
+  //   fetchProfile();
+  // }, []);
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    if (!currentUser) {
+      navigate("/Kambaz/Account/Signin");
+      return;
+    }
+    setProfile(currentUser);
+  }, [currentUser, navigate]);
+
+  const updateProfile = async () => {
+    const updatedProfile = await client.updateUser(profile);
+    dispatch(setCurrentUser(updatedProfile));
+  };
 
   return (
     <Container className="p-4" style={{ width: "350px" }}>
@@ -31,35 +43,41 @@ export default function Profile() {
         <div>
           <FormControl
             defaultValue={profile.username}
+            placeholder="Username"
             onChange={(e) =>
               setProfile({ ...profile, username: e.target.value })
             }
           />
           <FormControl
             defaultValue={profile.password}
+            placeholder="Password"
             onChange={(e) =>
               setProfile({ ...profile, password: e.target.value })
             }
           />
           <FormControl
             defaultValue={profile.firstName}
+            placeholder="First Name"
             onChange={(e) =>
               setProfile({ ...profile, firstName: e.target.value })
             }
           />
           <FormControl
             defaultValue={profile.lastName}
+            placeholder="Last Name"
             onChange={(e) =>
               setProfile({ ...profile, lastName: e.target.value })
             }
           />
           <FormControl
             defaultValue={profile.dob}
+            placeholder="Birth Date"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
             type="date"
           />
           <FormControl
             defaultValue={profile.email}
+            placeholder="Email"
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
           />
           <select
@@ -77,7 +95,16 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
-          <Button onClick={signout}> Sign out </Button>
+          <div>
+            <button
+              onClick={updateProfile}
+              className="btn btn-primary w-100 mb-2"
+            >
+              {" "}
+              Update{" "}
+            </button>
+            <Button onClick={signout}> Sign out </Button>
+          </div>
         </div>
       )}
     </Container>

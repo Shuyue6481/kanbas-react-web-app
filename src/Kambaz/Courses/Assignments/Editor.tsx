@@ -12,6 +12,9 @@ import { GoX } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, editAssignment, updateAssignment } from "./reducer";
+// import { createAssignment, updateAssignment, editAssignment } from "./client";
+import * as assignmentsClient from "./client";
+import * as coursesClient from "../client";
 
 export default function AssignmentEditor() {
   // const { cid, aid } = useParams();
@@ -31,9 +34,9 @@ The landing page should include the following:
 The Kanbas application should include a link to navigate back to the landing page.
 `;
 
-  const assignments = useSelector(
-    (state: any) => state.assignmentsReducer.assignments
-  );
+  // const assignments = useSelector(
+  //   (state: any) => state.assignmentsReducer.assignments
+  // );
   const assignment = useSelector(
     (state: any) => state.assignmentsReducer.assignment
   );
@@ -202,13 +205,23 @@ The Kanbas application should include a link to navigate back to the landing pag
         <Link
           to={`/Kambaz/Courses/${cid}/Assignments`}
           className="btn btn-danger"
-          onClick={() => {
-            if (assignments.find((a: any) => a._id === assignment._id)) {
-              dispatch(updateAssignment(assignment));
+          onClick={async () => {
+            let savedAssignment;
+            if (assignment._id) {
+              savedAssignment = await assignmentsClient.updateAssignment(
+                assignment
+              );
+
+              dispatch(updateAssignment(savedAssignment));
             } else {
-              dispatch(addAssignment(assignment));
+              // if (!cid) return;
+              savedAssignment = await coursesClient.createAssignmentForCourse(
+                cid as string,
+                assignment
+              );
+              dispatch(addAssignment(savedAssignment));
             }
-            navigate(`/Kanbas/Courses/${cid}/Assignments`);
+            navigate(`/Kambaz/Courses/${cid}/Assignments`);
           }}
         >
           Save

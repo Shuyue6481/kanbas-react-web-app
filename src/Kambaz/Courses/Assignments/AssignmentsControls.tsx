@@ -3,7 +3,8 @@ import { FaSearch, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { editAssignment } from "./reducer";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import * as assignmentsClient from "../client";
 
 export default function AssignmentsControls() {
   const { cid } = useParams();
@@ -16,13 +17,17 @@ export default function AssignmentsControls() {
     course: cid,
   };
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-
   const navigate = useNavigate();
-  const handleButtonClick = () => {
-    dispatch(editAssignment(newDefaultAssignment));
-    const newAid = uuidv4();
-    navigate(`/Kambaz/Courses/${cid}/Assignments/${newAid}`);
+
+  const handleButtonClick = async () => {
+    const newAssignment = await assignmentsClient.createAssignmentForCourse(
+      cid as string,
+      newDefaultAssignment
+    );
+    dispatch(editAssignment(newAssignment));
+    navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignment._id}`);
   };
+
   return (
     <div
       id="wd-assignments-controls"

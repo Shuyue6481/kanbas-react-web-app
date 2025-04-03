@@ -98,9 +98,18 @@ export default function TOC() {
         <a
           id="wd-a4"
           href="#/Labs/Lab4"
-          className={`nav-link ${pathname.includes("La44") ? "active" : ""}`}
+          className={`nav-link ${pathname.includes("Lab4") ? "active" : ""}`}
         >
           Lab 4
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          id="wd-a4"
+          href="#/Labs/Lab5"
+          className={`nav-link ${pathname.includes("Lab5") ? "active" : ""}`}
+        >
+          Lab 5
         </a>
       </li>
       <li className="nav-item">
@@ -115,7 +124,27 @@ export default function TOC() {
           target="_blank"
           className="nav-link"
         >
-          My GitHub
+          React Web GitHub
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          id="wd-github-node"
+          href="https://github.com/Shuyue6481/kambaz-node-server-app.git"
+          target="_blank"
+          className="nav-link"
+        >
+          Node Server GitHub
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          id="wd-deployed"
+          href="https://kambaz-node-server-app-kawa.onrender.com"
+          target="_blank"
+          className="nav-link"
+        >
+          Deployed Server
         </a>
       </li>
     </ul>

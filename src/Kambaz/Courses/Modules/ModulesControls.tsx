@@ -28,8 +28,8 @@ export default function ModulesControls({
             size="lg"
             className="me-1 float-end"
             id="wd-add-module-btn"
-            data-bs-toggle="modal"
-            data-bs-target="#wd-add-module-dialog"
+            // data-bs-toggle="modal"
+            // data-bs-target="#wd-add-module-dialog"
             onClick={handleShow}
           >
             <FaPlus

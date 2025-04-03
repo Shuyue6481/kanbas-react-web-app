@@ -15,16 +15,21 @@ export default function LessonControlButtons({
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
-    
     <div className="float-end">
-      {currentUser && (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (
- <><FaPencil
-          onClick={() => editModule(moduleId)}
-          className="text-primary me-2" /><FaTrash
-            className="text-danger me-2 mb-1"
-            onClick={() => deleteModule(moduleId)} /></>
-)}
-      
+      {currentUser &&
+        (currentUser.role === "ADMIN" || currentUser.role === "FACULTY") && (
+          <>
+            <FaPencil
+              onClick={() => editModule(moduleId)}
+              className="text-primary me-2"
+            />
+            <FaTrash
+              className="text-danger me-2 mb-1"
+              onClick={() => deleteModule(moduleId)}
+            />
+          </>
+        )}
+
       <GreenCheckmark />
       <BsPlus />
       <IoEllipsisVertical className="fs-4" />

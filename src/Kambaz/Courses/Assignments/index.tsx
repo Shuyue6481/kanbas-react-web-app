@@ -6,11 +6,18 @@ import { GoPlus, GoTriangleDown } from "react-icons/go";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import React from "react";
-import { deleteAssignment, editAssignment } from "./reducer";
+import React, { useEffect } from "react";
+import {
+  // addAssignment,
+  deleteAssignment,
+  editAssignment,
+  setAssignments,
+} from "./reducer";
 import { FaTrash } from "react-icons/fa6";
 import { format } from "date-fns";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import * as assignmentsClient from "./client";
+import * as coursesClient from "../client";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -18,14 +25,45 @@ export default function Assignments() {
   const assignments = useSelector(
     (state: any) => state.assignmentsReducer.assignments || []
   );
-  const courseAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid
-  );
+  // const courseAssignments = assignments.filter(
+  //   (assignment: any) => assignment.course === cid
+  // );
   const dispatch = useDispatch();
-  const [selectedAssignment, setSelectedAssignment] = React.useState(
-    courseAssignments[courseAssignments.length - 1]
-  );
+  // const [selectedAssignment, setSelectedAssignment] = React.useState(
+  //   courseAssignments[courseAssignments.length - 1]
+  // );
+  const [selectedAssignment, setSelectedAssignment] = React.useState<
+    any | null
+  >(null);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(
+      cid as string
+    );
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+  // useEffect(() => {
+  //   fetchAssignments();
+  // }, [cid, dispatch]);
+
+  // const createAssignmentForCourse = async () => {
+  //   if (!cid) return;
+  //   const newModule = { course: cid };
+  //   const module = await coursesClient.createAssignmentForCourse(
+  //     cid as string,
+  //     newModule
+  //   );
+  //   dispatch(addAssignment(module));
+  // };
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
 
   return (
     <div>
@@ -51,62 +89,57 @@ export default function Assignments() {
           </div>
         </li>
 
-        {assignments
-          .filter((assignment: any) => assignment.course === cid)
-          .map((assignment: any) => (
-            <li
-              key={assignment._id}
-              className="wd-lesson p-3 ps-1 d-flex align-items-center border"
-            >
-              <AssignmentControlButton />
-              <div className="flex-grow-1 ms-4 fs-5">
-                <Link
-                  to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
-                  className="fw-bold text-dark text-decoration-none"
-                  onClick={(e) => {
-                    if (
-                      currentUser &&
-                      (currentUser.role === "ADMIN" ||
-                        currentUser.role === "FACULTY")
-                    ) {
-                      dispatch(editAssignment(assignment));
-                    } else {
-                      e.preventDefault();
-                    }
-                  }}
-                  // onClick={(e) => {
-                  //   dispatch(editAssignment(assignment));
-                  // }}
-                >
-                  {assignment.title}
-                </Link>
-                <div className="text-muted small">
-                  <small>
-                    <span className="text-danger">Multiple Modules</span> |{" "}
-                    <strong>Not available until</strong>{" "}
-                    {/* {assignment.availableUntilDate} */}
-                    {/* {format(
+        {assignments.map((assignment: any) => (
+          <li
+            key={assignment._id}
+            className="wd-lesson p-3 ps-1 d-flex align-items-center border"
+          >
+            <AssignmentControlButton />
+            <div className="flex-grow-1 ms-4 fs-5">
+              <Link
+                to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                className="fw-bold text-dark text-decoration-none"
+                onClick={(e) => {
+                  if (
+                    currentUser &&
+                    (currentUser.role === "ADMIN" ||
+                      currentUser.role === "FACULTY")
+                  ) {
+                    dispatch(editAssignment(assignment));
+                  } else {
+                    e.preventDefault();
+                  }
+                }}
+              >
+                {assignment.title}
+              </Link>
+              <div className="text-muted small">
+                <small>
+                  <span className="text-danger">Multiple Modules</span> |{" "}
+                  <strong>Not available until</strong>{" "}
+                  {/* {assignment.availableUntilDate} */}
+                  {/* {format(
                       new Date(assignment.availableUntilDate),
                       "MMM d 'at' h:mma"
                     )}{" "} */}
-                    {assignment.availableUntilDate
-                      ? format(
-                          new Date(assignment.availableUntilDate),
-                          "MMM d 'at' h:mma"
-                        )
-                      : ""}{" "}
-                    | <br />
-                    <strong>Due</strong>{" "}
-                    {/* {format(new Date(assignment.dueDate), "MMM d 'at' h:mma")} |{" "} */}
-                    {assignment.dueDate
-                      ? format(new Date(assignment.dueDate), "MMM d 'at' h:mma")
-                      : ""}
-                    | {assignment.points} pts
-                  </small>
-                </div>
+                  {assignment.availableUntilDate
+                    ? format(
+                        new Date(assignment.availableUntilDate),
+                        "MMM d 'at' h:mma"
+                      )
+                    : ""}{" "}
+                  | <br />
+                  <strong>Due</strong>{" "}
+                  {/* {format(new Date(assignment.dueDate), "MMM d 'at' h:mma")} |{" "} */}
+                  {assignment.dueDate
+                    ? format(new Date(assignment.dueDate), "MMM d 'at' h:mma")
+                    : ""}{" "}
+                  | {assignment.points} pts
+                </small>
               </div>
-              <LessonControlButtons />
-              {/* <FaTrash
+            </div>
+            <LessonControlButtons />
+            {/* <FaTrash
                 className="text-danger me-1 mb-1 float-end fs-5"
                 style={{ position: "relative", top: "3px" }}
                 data-bs-toggle="modal"
@@ -117,66 +150,67 @@ export default function Assignments() {
                 }}
               /> */}
 
-              {currentUser &&
-                (currentUser.role === "ADMIN" ||
-                  currentUser.role === "FACULTY") && (
-                  <FaTrash
-                    className="text-danger me-1 mb-1 float-end fs-5"
-                    style={{ position: "relative", top: "3px" }}
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
-                    onClick={() => setSelectedAssignment({ ...assignment })}
-                  />
-                )}
-
-              <div
-                className="modal fade"
-                id="deleteModal"
-                tabIndex={-1}
-                aria-labelledby="deleteModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h1 className="modal-title fs-5" id="deleteModalLabel">
-                        Confirm Deletion
-                      </h1>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div className="modal-body">
-                      Are you sure you want to delete {selectedAssignment.title}
-                      ? This action cannot be undone.
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        No
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        onClick={() =>
-                          dispatch(deleteAssignment(selectedAssignment._id))
-                        }
-                      >
-                        Yes
-                      </button>
-                    </div>
-                  </div>
-                </div>
+            {currentUser &&
+              (currentUser.role === "ADMIN" ||
+                currentUser.role === "FACULTY") && (
+                <FaTrash
+                  className="text-danger me-1 mb-1 float-end fs-5"
+                  style={{ position: "relative", top: "3px" }}
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal"
+                  onClick={() => setSelectedAssignment({ ...assignment })}
+                />
+              )}
+          </li>
+        ))}
+        <div
+          className="modal fade"
+          id="deleteModal"
+          tabIndex={-1}
+          aria-labelledby="deleteModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="deleteModalLabel">
+                  Confirm Deletion
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
-            </li>
-          ))}
+              <div className="modal-body">
+                Are you sure you want to delete{" "}
+                {selectedAssignment ? selectedAssignment.title : ""}? This
+                action cannot be undone.
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={() =>
+                    selectedAssignment &&
+                    removeAssignment(selectedAssignment._id)
+                  }
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </ul>
     </div>
   );
