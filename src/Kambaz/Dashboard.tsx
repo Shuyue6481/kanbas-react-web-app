@@ -458,6 +458,7 @@ export default function Dashboard({
                   await addNewCourse();
                   await fetchAllCoursesData();
                   await fetchEnrollmentsData();
+                  await fetchMyCourses();
                 }}
               >
                 Add
@@ -469,6 +470,7 @@ export default function Dashboard({
 
                   await fetchAllCoursesData();
                   await fetchEnrollmentsData();
+                  await fetchMyCourses();
                 }}
                 id="wd-update-course-click"
               >
@@ -576,9 +578,10 @@ export default function Dashboard({
                               onClick={async (event) => {
                                 event.preventDefault();
                                 event.stopPropagation();
-                                deleteCourse(course._id);
+                                await deleteCourse(course._id);
                                 await fetchAllCoursesData();
                                 await fetchEnrollmentsData();
+                                await fetchMyCourses();
                               }}
                               className="btn btn-danger float-end"
                               id="wd-delete-course-click"
