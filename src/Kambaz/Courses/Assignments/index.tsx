@@ -14,10 +14,10 @@ import {
   setAssignments,
 } from "./reducer";
 import { FaTrash } from "react-icons/fa6";
-import { format } from "date-fns";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import * as assignmentsClient from "./client";
 import * as coursesClient from "../client";
+import { parseISO, format } from "date-fns";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -37,11 +37,26 @@ export default function Assignments() {
   >(null);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
+  
   const fetchAssignments = async () => {
-    const assignments = await coursesClient.findAssignmentsForCourse(
-      cid as string
-    );
-    dispatch(setAssignments(assignments));
+    // const assignments = await coursesClient.findAssignmentsForCourse(
+    //   cid as string
+    // );
+    const rawList = await coursesClient.findAssignmentsForCourse(cid as string);
+    const normalized = rawList.map((a: any) => ({
+      ...a,
+      dueDate: a.dueDate
+        ? format(parseISO(a.dueDate), "yyyy-MM-dd'T'HH:mm")
+        : "",
+      availableFromDate: a.availableFromDate
+        ? format(parseISO(a.availableFromDate), "yyyy-MM-dd'T'HH:mm")
+        : "",
+      availableUntilDate: a.availableUntilDate
+        ? format(parseISO(a.availableUntilDate), "yyyy-MM-dd'T'HH:mm")
+        : "",
+    }));
+    dispatch(setAssignments(normalized));
+    // dispatch(setAssignments(assignments));
   };
   useEffect(() => {
     fetchAssignments();

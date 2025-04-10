@@ -4,9 +4,12 @@ import PeopleTable from "../Courses/People/Table";
 import * as client from "./client";
 import { FormControl } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
+import * as courseClient from "../Courses/client";
 export default function Users() {
+  console.log("Users component mounted");
   const [users, setUsers] = useState<any[]>([]);
   const { uid } = useParams();
+
   const [role, setRole] = useState("");
   const filterUsersByRole = async (role: string) => {
     setRole(role);
@@ -47,6 +50,17 @@ export default function Users() {
   useEffect(() => {
     fetchUsers();
   }, [uid]);
+
+  //   const fetchUsers = async () => {
+  //     if (cid) {
+  //       const users = await courseClient.findUsersForCourse(cid);
+  //       console.log("Fetched users for course", cid, users);
+  //       setUsers(users);
+  //     }
+  //   };
+  //   useEffect(() => {
+  //     fetchUsers();
+  //   }, [cid]);
 
   return (
     <div>

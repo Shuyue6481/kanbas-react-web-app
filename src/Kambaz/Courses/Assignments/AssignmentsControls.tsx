@@ -2,7 +2,7 @@ import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { editAssignment } from "./reducer";
+import { addAssignment, editAssignment } from "./reducer";
 // import { v4 as uuidv4 } from "uuid";
 import * as assignmentsClient from "../client";
 
@@ -18,6 +18,23 @@ export default function AssignmentsControls() {
   };
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const navigate = useNavigate();
+
+  // const handleButtonClick = async () => {
+  //   const newAssignment = await assignmentsClient.createAssignmentForCourse(
+  //     cid as string,
+  //     newDefaultAssignment
+  //   );
+  //   console.log("Created assignment:", newAssignment);
+  //   dispatch(editAssignment(newAssignment));
+  //   // dispatch(addAssignment(newAssignment));
+  //   // dispatch(editAssignment(newAssignment));
+  //   // navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignment._id}`);
+  //   // navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignment._id || newAssignment.id}`);
+  //   // navigate(`/Assignments/${newAssignment._id}`);
+  //   // navigate(`${newAssignment._id}`);
+
+  // };
+
 
   const handleButtonClick = async () => {
     const newAssignment = await assignmentsClient.createAssignmentForCourse(

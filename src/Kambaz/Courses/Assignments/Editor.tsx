@@ -15,6 +15,7 @@ import { addAssignment, editAssignment, updateAssignment } from "./reducer";
 // import { createAssignment, updateAssignment, editAssignment } from "./client";
 import * as assignmentsClient from "./client";
 import * as coursesClient from "../client";
+import { useEffect } from "react";
 
 export default function AssignmentEditor() {
   // const { cid, aid } = useParams();
@@ -43,7 +44,34 @@ The Kanbas application should include a link to navigate back to the landing pag
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cid } = useParams();
+  const { cid, aid } = useParams();
+  // const { aid } = useParams();
+
+  // useEffect(() => {
+  //   if (aid) {
+  //     (async () => {
+  //       const fetched = await assignmentsClient.getAssignmentById(aid);
+  //       // 如果需要格式化日期，也在这里做
+  //       dispatch(editAssignment(fetched));
+  //     })();
+  //   }
+  // }, [aid, dispatch]);
+
+  
+
+  // useEffect(() => {
+  //   if (aid) {
+  //     assignmentsClient
+  //       .getAssignmentById(aid)
+  //       .then((fetched) => {
+  //         dispatch(editAssignment(fetched));
+  //       })
+  //       .catch((err) => {
+  //         console.error("Failed to load assignment", err);
+  //       });
+  //   }
+  // }, [aid, dispatch]);
+
 
   return (
     <Form id="wd-assignments-editor" className="p-4">
@@ -202,30 +230,52 @@ The Kanbas application should include a link to navigate back to the landing pag
         >
           Cancel
         </Link>
-        <Link
+        {/* <Link
           to={`/Kambaz/Courses/${cid}/Assignments`}
           className="btn btn-danger"
-          onClick={async () => {
-            let savedAssignment;
-            if (assignment._id) {
-              savedAssignment = await assignmentsClient.updateAssignment(
-                assignment
-              );
+          // onClick={async () => {
+          //   let savedAssignment;
+          //   if (assignment._id) {
+          //     savedAssignment = await assignmentsClient.updateAssignment(
+          //       assignment
+          //     );
 
-              dispatch(updateAssignment(savedAssignment));
-            } else {
-              // if (!cid) return;
-              savedAssignment = await coursesClient.createAssignmentForCourse(
-                cid as string,
-                assignment
-              );
-              dispatch(addAssignment(savedAssignment));
-            }
+          //     dispatch(updateAssignment(savedAssignment));
+          //   } else {
+          //     // if (!cid) return;
+          //     savedAssignment = await coursesClient.createAssignmentForCourse(
+          //       cid as string,
+          //       assignment
+          //     );
+          //     dispatch(addAssignment(savedAssignment));
+          //   }
+          //   navigate(`/Kambaz/Courses/${cid}/Assignments`);
+          // }}
+          onClick={async () => {
+            // const savedAssignment = await assignmentsClient.updateAssignment(assignment);
+            // dispatch(updateAssignment(savedAssignment));
+            // navigate(`/Kambaz/Courses/${cid}/Assignments`);
+            const savedAssignment = await assignmentsClient.updateAssignment(
+              assignment
+            );
+            dispatch(updateAssignment(savedAssignment));
             navigate(`/Kambaz/Courses/${cid}/Assignments`);
           }}
         >
           Save
-        </Link>
+        </Link> */}
+
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={async () => {
+            const saved = await assignmentsClient.updateAssignment(assignment);
+            dispatch(updateAssignment(saved));
+            navigate(`/Kambaz/Courses/${cid}/Assignments`);
+          }}
+        >
+          Save
+        </button>
       </div>
     </Form>
   );
