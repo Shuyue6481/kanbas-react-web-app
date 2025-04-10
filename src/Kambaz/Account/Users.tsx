@@ -4,7 +4,7 @@ import PeopleTable from "../Courses/People/Table";
 import * as client from "./client";
 import { FormControl } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
-import * as courseClient from "../Courses/client";
+// import * as courseClient from "../Courses/client";
 export default function Users() {
   console.log("Users component mounted");
   const [users, setUsers] = useState<any[]>([]);

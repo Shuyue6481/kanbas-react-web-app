@@ -2,7 +2,7 @@ import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { addAssignment, editAssignment } from "./reducer";
+import { editAssignment } from "./reducer";
 // import { v4 as uuidv4 } from "uuid";
 import * as assignmentsClient from "../client";
 

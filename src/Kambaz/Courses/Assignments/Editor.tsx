@@ -11,11 +11,11 @@ import {
 import { GoX } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addAssignment, editAssignment, updateAssignment } from "./reducer";
+import { editAssignment, updateAssignment } from "./reducer";
 // import { createAssignment, updateAssignment, editAssignment } from "./client";
 import * as assignmentsClient from "./client";
-import * as coursesClient from "../client";
-import { useEffect } from "react";
+// import * as coursesClient from "../client";
+// import { useEffect } from "react";
 
 export default function AssignmentEditor() {
   // const { cid, aid } = useParams();
@@ -44,7 +44,7 @@ The Kanbas application should include a link to navigate back to the landing pag
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cid, aid } = useParams();
+  const { cid} = useParams();
   // const { aid } = useParams();
 
   // useEffect(() => {

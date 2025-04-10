@@ -6,8 +6,8 @@ import AssignmentEditor from "./Assignments/Editor";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
-import Users from "../Account/Users";
-import PeopleDetails from "./People/Details";
+// import Users from "../Account/Users";
+// import PeopleDetails from "./People/Details";
 import * as courseClient from "../Courses/client";
 import { useEffect, useState } from "react";
 
