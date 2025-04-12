@@ -28,6 +28,10 @@ export default function Kambaz() {
   // };
   const [enrolling, setEnrolling] = useState<boolean>(false);
   const findCoursesForUser = async () => {
+    if (!currentUser) {
+      console.warn('User is null or undefined');
+      return;
+    }
     try {
       const courses = await userClient.findCoursesForUser(currentUser._id);
       setCourses(courses);

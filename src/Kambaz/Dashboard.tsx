@@ -725,6 +725,7 @@ export default function Dashboard({
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {courses.map((c: any) => (
+            
             <Col
               key={c._id}
               className="wd-dashboard-course"
@@ -735,7 +736,8 @@ export default function Dashboard({
                   to={`/Kambaz/Courses/${c._id}/Home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark"
                   onClick={(e) => {
-                    if (currentUser?.role === "STUDENT" && !c.enrolled) {
+                    // const isEnrolled = courses.some((mc: any) => mc._id === c._id);
+                    if (currentUser?.role === "STUDENT" && !c.enrolled && enrolling) {
                       e.preventDefault();
                     }
                   }}
@@ -786,7 +788,7 @@ export default function Dashboard({
                       </button>
                     )}
 
-                    {/* 管理员/教师视图下显示删除和编辑 */}
+
                     {currentUser &&
                       (currentUser.role === "ADMIN" ||
                         currentUser.role === "FACULTY") && (
